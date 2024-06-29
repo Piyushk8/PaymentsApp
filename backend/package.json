@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "start": "node index.js",
-      "build": "echo 'No build step for backend'"
+    "start": "node index.js",
+    "build": "echo 'No build step for backend'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.0",
     "zod": "^3.22.4"
