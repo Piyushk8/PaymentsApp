@@ -5,7 +5,8 @@ const zod  = require("zod");
 const userRouter  = express.Router()
 //jwt 
 const jwt = require("jsonwebtoken");
-const {JWT_SECRET}= require("../config.js")
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 //databases
 const {User} = require("../db/db.js");
 const { Router } = require("express");

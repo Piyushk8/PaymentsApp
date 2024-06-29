@@ -1,10 +1,15 @@
+
+require('dotenv').config();
+
 const mongoose = require('mongoose');
 const { number } = require('zod');
 
 
+const jwtSecret = process.env.JWT_SECRET;
+const mongoUrl = process.env.MONGODB_URI;
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://piyushk5531:MONGODB0808@cluster0.zd6ogko.mongodb.net/Paytm');
+ mongoose.connect(mongoUrl);
 
 // Define schemas
 // Define schemas

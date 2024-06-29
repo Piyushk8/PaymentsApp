@@ -3,7 +3,9 @@ const cors =  require("cors")
 const zod =require("zod");
 const mainRouter = require("./Routes/mainrouter")
 const app = express();
-app.use(cors());
+app.use(cors(
+    // origin: 'https://'
+));
 app.use(express.json())
 app.use("/api/v1",mainRouter)
 
