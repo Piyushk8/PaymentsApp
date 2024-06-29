@@ -5,7 +5,7 @@ const mainRouter = require("./Routes/mainrouter")
 const app = express();
 const allowedOrigins = [
     'http://localhost:5173', // Local development URL
-    "https://paymentsapp-d8oq.onrender.com" // Deployed frontend URL
+    "https://paymentsapp-q5yi.onrender.com" // Deployed frontend URL
   ];
   
   // CORS configuration
