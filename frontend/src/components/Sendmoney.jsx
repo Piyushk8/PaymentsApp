@@ -2,6 +2,9 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios'
 import { useState } from 'react';
 import Error from './ErrorMessage';
+import { API_BASE_URL } from '../config';
+
+
 const SendMoney = () => {
 const [searchParams] = useSearchParams();
 
@@ -46,7 +49,7 @@ const [isError,setIsError] = useState({error:false,status:false});
                     </div>
                     <button onClick={async()=>{
                         try{
-                       const response =  await axios.post("http://localhost:3000/api/v1/account/transfer",
+                       const response =  await axios.post(`${API_BASE_URL}/api/v1/account/transfer`,
                         {
                          to:id,
                         amount:amount

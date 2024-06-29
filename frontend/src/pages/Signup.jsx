@@ -7,6 +7,9 @@ import  Subheading  from "../components/Subheading"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Error from "../components/ErrorMessage"
+
+import { API_BASE_URL } from "../config"
+
 const Signup = () => {
   //states
   const nav = useNavigate()

@@ -6,7 +6,7 @@ const { number } = require('zod');
 
 
 const jwtSecret = process.env.JWT_SECRET;
-const mongoUrl = process.env.MONGODB_URI;
+const mongoUrl = process.env.MONGODB_URL;
 
 // Connect to MongoDB
  mongoose.connect(mongoUrl);
