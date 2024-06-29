@@ -44,7 +44,7 @@ const [isError,setIsError] = useState({status:false,error:false})
         <div className="pt-4">
           
           <Button onClick={async()=>{
-            await axios.post("http://localhost:3000/api/v1/User/signup",
+            await axios.post(`${API_BASE_URL}/api/v1/User/signup`,
               {
                 firstname:FirstName,
                 lastname:LastName,
