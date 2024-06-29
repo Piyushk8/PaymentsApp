@@ -4,7 +4,7 @@ const zod =require("zod");
 const mainRouter = require("./Routes/mainrouter")
 const app = express();
 app.use(cors(
-    // origin: 'https://'
+     {origin: 'https://paymentsapp-d8oq.onrender.com'}
 ));
 app.use(express.json())
 app.use("/api/v1",mainRouter)
