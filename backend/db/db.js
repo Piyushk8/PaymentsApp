@@ -1,15 +1,22 @@
 
-require('dotenv').config();
+require("dotenv").config();
 
 const mongoose = require('mongoose');
 const { number } = require('zod');
 
 
-const jwtSecret = process.env.JWT_SECRET;
-const mongoUrl = process.env.MONGODB_URL;
-
 // Connect to MongoDB
- mongoose.connect(mongoUrl);
+ mongoose.connect(process.env.MONGODB_URL);
+
+
+// console.log('MongoDB URI:', process.env.MONGODB_URL);
+
+// mongoose.connect(process.env.MONGODB_URL, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// })
+// .then(() => console.log('MongoDB connected...'))
+// .catch(err => console.log(err));
 
 // Define schemas
 // Define schemas
