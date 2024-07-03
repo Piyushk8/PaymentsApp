@@ -6,13 +6,11 @@ const { number } = require('zod');
 
 
 // Connect to MongoDB
-console.log(process.env.MONGODB_URL)
- mongoose.connect(process.env.MONGODB_URL)
+// console.log(process.env.MONGODB_URL)
+ mongoose.connect("mongodb+srv://piyushk5531:MONGODB0808@cluster0.zd6ogko.mongodb.net/Paytm")
  .then(()=>console.log("connected"))
  .catch((err)=>console.log(err));
 
-
-// console.log('MongoDB URI:', process.env.MONGODB_URL);
 
 // mongoose.connect(process.env.MONGODB_URL, {
 //   useNewUrlParser: true,

@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+    .toastBody {
+        font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+        color: #10171D; /* #10171D */
+        font-size: 0.875rem !important;
+      }

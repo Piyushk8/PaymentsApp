@@ -1,4 +1,5 @@
 
+const bcrypt = require('bcrypt')
 const express = require('express');
 const {authMiddleware} = require("../middleware.js")
 const zod  = require("zod");
@@ -20,44 +21,45 @@ const signupSchema = zod.object({
 
 
 userRouter.post("/signup", async(req,res)=>{
+    const body = req.body;
+    const {success} = signupSchema.safeParse(req.body);
+    if(!success){
+        return res.status(411).json({
+            message:"email already taken/Incorrect inputs"
+        })
+    }
 
-const body = req.body;
-const {success} = signupSchema.safeParse(req.body);
-if(!success){
-    return res.status(411).json({
-        message:"email already taken/Incorrect inputs"
+    const ExistingUser =await User.findOne({
+        username:body.username
     })
-}
 
 
+    if (ExistingUser){
+        console.log('hellllll')
+        
+        return res.json("Email already taken");
 
-const ExistingUser =await User.findOne({
-    username:body.username
-})
+    }
 
 
+//bcrypting 
+const hash = await bcrypt.hash(body.password,10);
+console.log(hash)
+    const dbuser = await User.create({
+    username:body.username,
+    password:hash,
+    firstname:body.firstname,
+    lastname:body.lastname
+    })
 
-if (ExistingUser){
-    console.log('hellllll')
-    return res.json("Email already taken");
+    const token = jwt.sign({
+        userId:dbuser._id
+    },JWT_SECRET)
 
-}
-
-const dbuser = await User.create({
-username:body.username,
-password:body.password,
-firstname:body.firstname,
-lastname:body.lastname
-})
-
-const token = jwt.sign({
-    userId:dbuser._id
-},JWT_SECRET)
-
-res.json({message:"User Created successfully",
-    token:token
-})
-})
+    res.json({message:"User Created successfully",
+        token:token
+    })
+    })
 
 const SignInSchema = zod.object({
     username:zod.string().email(),
@@ -65,27 +67,33 @@ const SignInSchema = zod.object({
 })
 
 userRouter.post("/signin",async (req,res)=>{
-   
-    console.log("hello")
+    console.log("user signin ")
     const body = req.body;
+  
     const {success} = SignInSchema.safeParse(req.body);
-    if(!success){
+    if(!success){ 
         return res.status(411).json({
             message:"email already taken/Incorrect inputs"
+            
         })
     }
-    
+
   
-    const user =await User.findOne({
+    const users =await User.find({
         username:body.username,
-        password:body.password
+       
     })
-  
-console.log(user)
+
+const user = users.filter(async(user)=>{
+await bcrypt.compare(body.password,user.password)
+})
+
+
+
 if (user){
    
-    var token = jwt.sign({
-        userId:user._id
+    const token = jwt.sign({
+        userId:user[0]._id
     },JWT_SECRET)
      
     res.json({
@@ -159,11 +167,15 @@ res.json({
 userRouter.get("/bulk",authMiddleware, async (req, res) => {
     const filter = req.query.filter;
     let users;
-    
+    // console.log(req.user.userId);
 
     if (filter == undefined || filter == "") {
         console.log("no filter");
-        users = await User.find({});
+        // users = await User.find({});
+        users = await User.find({ _id: { $ne: req.user.userId } })
+
+
+
     } else {
         users = await User.find({
             firstname: {
@@ -172,7 +184,7 @@ userRouter.get("/bulk",authMiddleware, async (req, res) => {
             }
         });
     }
-
+   
     res.json({
         users: users.map(user => ({
             username: user.username,
